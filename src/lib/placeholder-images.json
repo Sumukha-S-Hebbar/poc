@@ -23,6 +23,12 @@
       "description": "Placeholder for a map view of a site",
       "imageUrl": "https://picsum.photos/seed/sitemap/800/600",
       "imageHint": "map location"
+    },
+    {
+      "id": "site-map-lg",
+      "description": "Placeholder for a large map view of a site",
+      "imageUrl": "https://picsum.photos/seed/sitemap-lg/1200/600",
+      "imageHint": "detailed map location"
     }
   ]
 }
