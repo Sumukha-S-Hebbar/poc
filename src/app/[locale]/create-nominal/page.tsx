@@ -106,7 +106,7 @@ export default function CreateNominalPage() {
               <Image
                 src={mapImage.imageUrl}
                 alt="Map for site selection"
-                layout="fill"
+                fill
                 objectFit="cover"
                 data-ai-hint={mapImage.imageHint}
               />
@@ -189,7 +189,7 @@ export default function CreateNominalPage() {
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Choose An Option" />
-                      </Trigger>
+                      </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                        <SelectItem value="nairobi-city">Nairobi City</SelectItem>
