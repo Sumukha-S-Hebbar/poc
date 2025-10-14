@@ -2,6 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { NominalsFulfilledChart } from './components/NominalsFulfilledChart';
 import { useTranslations } from 'next-intl';
+import { siteRequests } from '@/lib/data';
+import { SiteRequestCard } from './components/SiteRequestCard';
+import { CreateRequestDialog } from './components/CreateRequestDialog';
+import { agents } from '@/lib/data';
 
 const stats = [
     { titleKey: 'totalRentPaid', value: '905,585 SH', color: 'text-sky-500' },
@@ -17,6 +21,7 @@ export default function DashboardPage() {
         <div className="container py-8 bg-gray-50/50 min-h-full">
             <div className="flex items-center justify-between mb-8">
                 <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
+                <CreateRequestDialog />
             </div>
 
             <Card className="mb-8">
@@ -49,6 +54,12 @@ export default function DashboardPage() {
                   <div className={`text-3xl font-bold ${stat.color}`}>{stat.value}</div>
                 </CardContent>
               </Card>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {siteRequests.map((request) => (
+                <SiteRequestCard key={request.id} request={request} agent={agents.find(a => a.id === request.assignedAgentId)} />
             ))}
           </div>
 
