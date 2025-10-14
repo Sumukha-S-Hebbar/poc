@@ -50,8 +50,8 @@ export function Header() {
         className={cn(
           'transition-colors hover:text-white px-3 py-2 rounded-md text-sm font-medium',
           pathname.endsWith(link.href)
-            ? 'bg-white text-blue-600'
-            : 'text-blue-100 hover:bg-blue-700'
+            ? 'bg-white text-red-600'
+            : 'text-red-100 hover:bg-red-700'
         )}
       >
         {t(link.labelKey)}
@@ -59,7 +59,7 @@ export function Header() {
     ));
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-blue-600">
+    <header className="sticky top-0 z-50 w-full bg-red-600">
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex items-center">
           <Link
@@ -84,7 +84,7 @@ export function Header() {
               <span className="sr-only">{t('toggleMenu')}</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="bg-blue-600 text-white border-r-0">
+          <SheetContent side="left" className="bg-red-600 text-white border-r-0">
             <Link href="/" className="flex items-center space-x-2 mb-6">
               <div className="bg-white p-2 rounded-md">
                 <Logo className="h-8 w-8" />
@@ -98,7 +98,7 @@ export function Header() {
 
         <div className="flex flex-1 items-center justify-end space-x-4">
           <Select onValueChange={onSelectChange} defaultValue={locale} disabled={isPending}>
-            <SelectTrigger className="w-auto bg-blue-600 border-blue-500 text-white focus:ring-0">
+            <SelectTrigger className="w-auto bg-red-600 border-red-500 text-white focus:ring-0">
               <Globe className="h-4 w-4 mr-2" />
               <SelectValue placeholder={t('language')} />
             </SelectTrigger>
@@ -109,7 +109,7 @@ export function Header() {
           </Select>
           <Button
             variant="ghost"
-            className="text-white hover:bg-blue-700 hover:text-white"
+            className="text-white hover:bg-red-700 hover:text-white"
           >
             <LogOut className="mr-2 h-4 w-4" />
             {t('logout')}
