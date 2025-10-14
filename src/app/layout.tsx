@@ -5,7 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Header } from '@/components/common/Header';
 
 export const metadata: Metadata = {
-  title: 'SiteLink Pro',
+  title: 'TowerBuddy',
   description: 'Connecting Towercos with premier site locations.',
 };
 
