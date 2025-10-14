@@ -1,0 +1,52 @@
+
+{
+  "Header": {
+    "dashboard": "TABLERO",
+    "createNominal": "CREAR NOMINAL",
+    "nominalsList": "LISTA DE NOMINALES",
+    "searchCandidate": "BUSCAR CANDIDATO",
+    "overview": "VISIÓN GENERAL",
+    "reports": "REPORTES",
+    "account": "CUENTA",
+    "toggleMenu": "Alternar menú",
+    "language": "Idioma",
+    "english": "INGLÉS",
+    "spanish": "ESPAÑOL",
+    "logout": "CERRAR SESIÓN"
+  },
+  "Dashboard": {
+    "title": "TABLERO",
+    "filterBy": "Filtrar por",
+    "chooseOption": "Elige una opción",
+    "daily": "Diario",
+    "weekly": "Semanal",
+    "monthly": "Mensual",
+    "yearly": "Anual",
+    "stats": {
+      "totalRentPaid": "Alquiler total pagado",
+      "totalNominalsCreated": "Nominales totales creados",
+      "totalNominalsFulfilled": "Nominales totales completados",
+      "avgTimeToFulfill": "Tiempo promedio para completar un nominal"
+    },
+    "nominalsFulfilled": "Nominales Cumplidos"
+  },
+    "Home": {
+    "title": "SiteLink Pro",
+    "subtitle": "Agilizando la adquisición de sitios para Towercos, MNO y Agentes Inmobiliarios. Su enlace directo a las ubicaciones principales de las torres.",
+    "exploreDashboard": "Explorar Tablero",
+    "keyFeatures": "Características Clave",
+    "featuresTitle": "Acelere la Expansión de su Red",
+    "featuresSubtitle": "SiteLink Pro proporciona una plataforma integrada para gestionar todo el ciclo de vida de la adquisición de sitios, desde la solicitud inicial hasta el acuerdo final.",
+    "feature1Title": "Solicitudes de Sitios para Torres",
+    "feature1Desc": "Las Towercos pueden crear y gestionar fácilmente solicitudes de sitios con detalles de ubicación específicos y especificaciones técnicas.",
+    "feature2Title": "Asignación de Agentes",
+    "feature2Desc": "Asigne solicitudes a agentes inmobiliarios de confianza para encontrar el sitio perfecto para su próxima torre.",
+    "feature3Title": "Recomendaciones de Sitios con IA",
+    "feature3Desc": "Los agentes pueden aprovechar nuestra IA para descubrir y recomendar sitios adecuados cerca de las ubicaciones solicitadas.",
+    "feature4Title": "Directorio de Consultores",
+    "feature4Desc": "Acceda a una lista seleccionada de consultores legales y de permisos para agilizar la ejecución de su proyecto.",
+    "footer": {
+        "copyright": "SiteLink Pro. Todos los derechos reservados."
+    }
+  }
+}

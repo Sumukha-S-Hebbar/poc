@@ -1,0 +1,52 @@
+
+{
+  "Header": {
+    "dashboard": "DASHBOARD",
+    "createNominal": "CREATE NOMINAL",
+    "nominalsList": "NOMINALS LIST",
+    "searchCandidate": "SEARCH CANDIDATE",
+    "overview": "OVERVIEW",
+    "reports": "REPORTS",
+    "account": "ACCOUNT",
+    "toggleMenu": "Toggle Menu",
+    "language": "Language",
+    "english": "ENGLISH",
+    "spanish": "SPANISH",
+    "logout": "LOGOUT"
+  },
+  "Dashboard": {
+    "title": "DASHBOARD",
+    "filterBy": "Filter By",
+    "chooseOption": "Choose An Option",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "stats": {
+      "totalRentPaid": "Total Rent Paid",
+      "totalNominalsCreated": "Total Nominals Created",
+      "totalNominalsFulfilled": "Total Nominals Fulfilled",
+      "avgTimeToFulfill": "Average Time To Fulfill A Nominal"
+    },
+    "nominalsFulfilled": "Nominals Fulfilled"
+  },
+  "Home": {
+    "title": "SiteLink Pro",
+    "subtitle": "Streamlining site acquisition for Towercos, MNOs, and Real Estate Agents. Your direct link to prime tower locations.",
+    "exploreDashboard": "Explore Dashboard",
+    "keyFeatures": "Key Features",
+    "featuresTitle": "Accelerate Your Network Expansion",
+    "featuresSubtitle": "SiteLink Pro provides an integrated platform to manage the entire lifecycle of site acquisition, from initial request to final handshake.",
+    "feature1Title": "Tower Site Requests",
+    "feature1Desc": "Towercos can easily create and manage site requests with specific location details and technical specifications.",
+    "feature2Title": "Agent Assignment",
+    "feature2Desc": "Assign requests to trusted real estate agents to find the perfect site for your next tower.",
+    "feature3Title": "AI Site Recommendations",
+    "feature3Desc": "Agents can leverage our AI to discover and recommend suitable sites near requested locations.",
+    "feature4Title": "Consultant Directory",
+    "feature4Desc": "Access a curated list of permit and legal consultants to streamline your project execution.",
+    "footer": {
+        "copyright": "SiteLink Pro. All Rights Reserved."
+    }
+  }
+}

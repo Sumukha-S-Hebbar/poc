@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
-import { Toaster } from '@/components/ui/toaster';
-import { Header } from '@/components/common/Header';
+import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'TowerBuddy',
@@ -11,22 +10,33 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params: { locale },
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
+  params: { locale: string };
 }>) {
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className={cn('font-body antialiased', 'min-h-screen bg-background font-sans')}>
-        <div className="relative flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
-        </div>
-        <Toaster />
+      <body
+        className={cn(
+          'font-body antialiased',
+          'min-h-screen bg-background font-sans'
+        )}
+      >
+        {children}
       </body>
     </html>
   );
