@@ -48,8 +48,8 @@ export function Header() {
         key={link.href}
         href={link.href}
         className={cn(
-          'transition-colors hover:text-foreground/80',
-          pathname.endsWith(link.href) ? 'text-foreground' : 'text-foreground/60'
+          'transition-colors hover:text-primary-foreground/80',
+          pathname.endsWith(link.href) ? 'text-primary-foreground' : 'text-primary-foreground/60'
         )}
       >
         {t(link.labelKey)}
@@ -57,7 +57,7 @@ export function Header() {
     ));
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b bg-red-600 text-primary-foreground">
       <div className="container flex h-14 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
@@ -76,7 +76,7 @@ export function Header() {
           <SheetTrigger asChild>
             <Button
               variant="ghost"
-              className="md:hidden"
+              className="md:hidden text-primary-foreground hover:bg-red-700 hover:text-primary-foreground"
             >
               <Menu className="h-5 w-5" />
               <span className="sr-only">{t('toggleMenu')}</span>
@@ -95,7 +95,7 @@ export function Header() {
 
         <div className="flex flex-1 items-center justify-end space-x-4">
           <Select onValueChange={onSelectChange} defaultValue={locale} disabled={isPending}>
-            <SelectTrigger className="w-auto">
+            <SelectTrigger className="w-auto text-primary-foreground bg-red-700/50 border-red-500">
               <Globe className="h-4 w-4 mr-2" />
               <SelectValue placeholder={t('language')} />
             </SelectTrigger>
@@ -104,7 +104,7 @@ export function Header() {
               <SelectItem value="es">{t('spanish')}</SelectItem>
             </SelectContent>
           </Select>
-          <Button variant="ghost">
+          <Button variant="ghost" className="text-primary-foreground hover:bg-red-700 hover:text-primary-foreground">
             <LogOut className="mr-2 h-4 w-4" />
             {t('logout')}
           </Button>
