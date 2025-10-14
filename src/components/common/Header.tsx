@@ -48,10 +48,8 @@ export function Header() {
         key={link.href}
         href={link.href}
         className={cn(
-          'transition-colors hover:text-white px-3 py-2 rounded-md text-sm font-medium',
-          pathname.endsWith(link.href)
-            ? 'bg-white text-red-600'
-            : 'text-red-100 hover:bg-red-700'
+          'transition-colors hover:text-foreground/80',
+          pathname.endsWith(link.href) ? 'text-foreground' : 'text-foreground/60'
         )}
       >
         {t(link.labelKey)}
@@ -59,16 +57,16 @@ export function Header() {
     ));
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-red-600">
-      <div className="container flex h-16 items-center">
-        <div className="mr-4 hidden md:flex items-center">
-          <Link
-            href="/"
-            className="mr-6 flex items-center space-x-2 bg-white p-3 rounded-md"
-          >
-            <Logo className="h-8 w-8" />
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
+      <div className="container flex h-14 items-center">
+        <div className="mr-4 hidden md:flex">
+          <Link href="/" className="mr-6 flex items-center space-x-2">
+            <Logo className="h-6 w-6" />
+            <span className="hidden font-bold sm:inline-block">
+              SiteLink Pro
+            </span>
           </Link>
-          <nav className="flex items-center space-x-1 text-sm font-medium">
+          <nav className="flex items-center space-x-6 text-sm font-medium">
             <NavItems />
           </nav>
         </div>
@@ -78,19 +76,18 @@ export function Header() {
           <SheetTrigger asChild>
             <Button
               variant="ghost"
-              className="md:hidden text-white hover:text-white"
+              className="md:hidden"
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="h-5 w-5" />
               <span className="sr-only">{t('toggleMenu')}</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="bg-red-600 text-white border-r-0">
+          <SheetContent side="left">
             <Link href="/" className="flex items-center space-x-2 mb-6">
-              <div className="bg-white p-2 rounded-md">
-                <Logo className="h-8 w-8" />
-              </div>
+              <Logo className="h-6 w-6" />
+              <span className="font-bold">SiteLink Pro</span>
             </Link>
-            <nav className="flex flex-col space-y-2 text-base font-medium">
+            <nav className="flex flex-col space-y-4 text-sm font-medium">
               <NavItems />
             </nav>
           </SheetContent>
@@ -98,7 +95,7 @@ export function Header() {
 
         <div className="flex flex-1 items-center justify-end space-x-4">
           <Select onValueChange={onSelectChange} defaultValue={locale} disabled={isPending}>
-            <SelectTrigger className="w-auto bg-red-600 border-red-500 text-white focus:ring-0">
+            <SelectTrigger className="w-auto">
               <Globe className="h-4 w-4 mr-2" />
               <SelectValue placeholder={t('language')} />
             </SelectTrigger>
@@ -107,10 +104,7 @@ export function Header() {
               <SelectItem value="es">{t('spanish')}</SelectItem>
             </SelectContent>
           </Select>
-          <Button
-            variant="ghost"
-            className="text-white hover:bg-red-700 hover:text-white"
-          >
+          <Button variant="ghost">
             <LogOut className="mr-2 h-4 w-4" />
             {t('logout')}
           </Button>
