@@ -1,1 +1,5 @@
-// Flows will be imported for their side effects in this file.
+import { config } from 'dotenv';
+config();
+
+import '@/ai/flows/generate-follow-up-reminders.ts';
+import '@/ai/flows/recommend-potential-sites.ts';

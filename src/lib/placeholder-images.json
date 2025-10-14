@@ -1,3 +1,28 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "Hero image for landing page",
+      "imageUrl": "https://picsum.photos/seed/hero/1920/1080",
+      "imageHint": "telecommunication tower sunset"
+    },
+    {
+      "id": "consultant",
+      "description": "Placeholder for consultant profile picture",
+      "imageUrl": "https://picsum.photos/seed/consultant/400/400",
+      "imageHint": "professional business person"
+    },
+    {
+      "id": "agent",
+      "description": "Placeholder for agent profile picture",
+      "imageUrl": "https://picsum.photos/seed/agent/100/100",
+      "imageHint": "professional portrait"
+    },
+    {
+      "id": "site-map",
+      "description": "Placeholder for a map view of a site",
+      "imageUrl": "https://picsum.photos/seed/sitemap/800/600",
+      "imageHint": "map location"
+    }
+  ]
 }
