@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { NominalsFulfilledChart } from './components/NominalsFulfilledChart';
@@ -18,7 +19,7 @@ export default function DashboardPage() {
     const t = useTranslations('Dashboard');
 
     return (
-        <div className="container py-8 bg-gray-50/50 min-h-full">
+        <div className="container py-8 bg-gray-50/50 min-h-full" style={{ padding: '10px' }}>
             <div className="flex items-center justify-between mb-8">
                 <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
                 <CreateRequestDialog />
