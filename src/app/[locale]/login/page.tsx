@@ -6,21 +6,65 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { FacebookIcon, GoogleIcon, MicrosoftIcon, TowerBuddyLogo } from '@/components/icons/SocialIcons';
 import Link from 'next/link';
-import { signIn, useSession } from 'next-auth/react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 export default function LoginPage() {
-  const { data: session, status } = useSession();
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  
+  const handleGoogleLogin = () => {
+    // 1. Initiate Google's client-side OAuth flow.
+    //    You would use a library like '@react-oauth/google' here.
+    //    const googleLogin = useGoogleLogin({ onSuccess: tokenResponse => handleBackendLogin(tokenResponse.code, 'google'), flow: 'auth-code' });
+    //    googleLogin();
 
-  useEffect(() => {
-    if (status === 'authenticated') {
-      router.push(callbackUrl);
-    }
-  }, [status, router, callbackUrl]);
+    // 2. For demonstration, we'll simulate receiving a code.
+    const fakeAuthCode = 'fake-google-auth-code-12345';
+    console.log('Received Google Auth Code:', fakeAuthCode);
+    handleBackendLogin(fakeAuthCode, 'google');
+  };
+
+  const handleFacebookLogin = () => {
+    // 1. Initiate Facebook's client-side OAuth flow.
+    //    You would use the Facebook SDK or a library like 'react-facebook-login'.
+    
+    // 2. For demonstration, we'll simulate receiving an access token.
+    const fakeAccessToken = 'fake-facebook-access-token-67890';
+    console.log('Received Facebook Access Token:', fakeAccessToken);
+    handleBackendLogin(fakeAccessToken, 'facebook');
+  };
+  
+  const handleMicrosoftLogin = () => {
+    // 1. Initiate Microsoft's client-side OAuth flow.
+    //    You would use a library like '@azure/msal-react'.
+
+    // 2. For demonstration, we'll simulate receiving an access token.
+    const fakeAccessToken = 'fake-microsoft-access-token-abcde';
+    console.log('Received Microsoft Access Token:', fakeAccessToken);
+    handleBackendLogin(fakeAccessToken, 'microsoft');
+  };
+
+  const handleBackendLogin = async (credential: string, provider: 'google' | 'facebook' | 'microsoft') => {
+    console.log(`Sending credential to backend for provider: ${provider}`);
+    // This is where you would make an API call to your own backend.
+    // For example:
+    // try {
+    //   const response = await fetch('/api/auth/social-login', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ credential, provider }),
+    //   });
+    //   const data = await response.json();
+    //   if (response.ok) {
+    //     // Handle successful login, e.g., store session token, redirect user
+    //     console.log('Backend login successful:', data);
+    //     // router.push('/dashboard');
+    //   } else {
+    //     // Handle backend error
+    //     console.error('Backend login failed:', data.message);
+    //   }
+    // } catch (error) {
+    //   console.error('API call failed:', error);
+    // }
+    alert(`Simulating backend call for ${provider} with credential: ${credential}`);
+  };
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-gray-100 p-4">
@@ -73,13 +117,13 @@ export default function LoginPage() {
           </div>
 
           <div className="grid grid-cols-3 gap-3">
-            <Button variant="outline" className="h-12" onClick={() => signIn('google', { callbackUrl })}>
+            <Button variant="outline" className="h-12" onClick={handleGoogleLogin}>
               <GoogleIcon className="h-6 w-6" />
             </Button>
-            <Button variant="outline" className="h-12" onClick={() => signIn('facebook', { callbackUrl })}>
+            <Button variant="outline" className="h-12" onClick={handleFacebookLogin}>
               <FacebookIcon className="h-6 w-6" />
             </Button>
-            <Button variant="outline" className="h-12" onClick={() => signIn('azure-ad-b2c', { callbackUrl })}>
+            <Button variant="outline" className="h-12" onClick={handleMicrosoftLogin}>
               <MicrosoftIcon className="h-6 w-6" />
             </Button>
           </div>
