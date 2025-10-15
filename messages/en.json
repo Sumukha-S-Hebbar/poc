@@ -48,5 +48,17 @@
     "footer": {
         "copyright": "SiteLink Pro. All Rights Reserved."
     }
+  },
+  "Login": {
+    "emailAddress": "EMAIL ADDRESS",
+    "password": "PASSWORD",
+    "enterEmail": "Enter Email",
+    "enterPassword": "Enter Password",
+    "forgotPassword": "Forgot Password?",
+    "login": "Login",
+    "continueWith": "Or Continue With",
+    "noAccount": "Don't have an account?",
+    "signUp": "SIGN UP",
+    "startEarning": "START EARNING TODAY"
   }
 }
