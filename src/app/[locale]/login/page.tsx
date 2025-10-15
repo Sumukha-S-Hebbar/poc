@@ -6,36 +6,30 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { FacebookIcon, GoogleIcon, MicrosoftIcon, TowerBuddyLogo } from '@/components/icons/SocialIcons';
 import Link from 'next/link';
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function LoginPage() {
   
-  const handleGoogleLogin = () => {
-    // 1. Initiate Google's client-side OAuth flow.
-    //    You would use a library like '@react-oauth/google' here.
-    //    const googleLogin = useGoogleLogin({ onSuccess: tokenResponse => handleBackendLogin(tokenResponse.code, 'google'), flow: 'auth-code' });
-    //    googleLogin();
+  const googleLogin = useGoogleLogin({
+    onSuccess: tokenResponse => handleBackendLogin(tokenResponse.code, 'google'),
+    flow: 'auth-code',
+  });
 
-    // 2. For demonstration, we'll simulate receiving a code.
-    const fakeAuthCode = 'fake-google-auth-code-12345';
-    console.log('Received Google Auth Code:', fakeAuthCode);
-    handleBackendLogin(fakeAuthCode, 'google');
+  const handleGoogleLogin = () => {
+    googleLogin();
   };
 
   const handleFacebookLogin = () => {
-    // 1. Initiate Facebook's client-side OAuth flow.
-    //    You would use the Facebook SDK or a library like 'react-facebook-login'.
-    
-    // 2. For demonstration, we'll simulate receiving an access token.
+    // This would typically involve using the Facebook SDK (e.g., FB.login)
+    // For demonstration, we'll simulate receiving an access token.
     const fakeAccessToken = 'fake-facebook-access-token-67890';
     console.log('Received Facebook Access Token:', fakeAccessToken);
     handleBackendLogin(fakeAccessToken, 'facebook');
   };
   
   const handleMicrosoftLogin = () => {
-    // 1. Initiate Microsoft's client-side OAuth flow.
-    //    You would use a library like '@azure/msal-react'.
-
-    // 2. For demonstration, we'll simulate receiving an access token.
+    // This would typically involve a library like '@azure/msal-react'
+    // For demonstration, we'll simulate receiving an access token.
     const fakeAccessToken = 'fake-microsoft-access-token-abcde';
     console.log('Received Microsoft Access Token:', fakeAccessToken);
     handleBackendLogin(fakeAccessToken, 'microsoft');
