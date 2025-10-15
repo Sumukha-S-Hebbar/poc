@@ -6,8 +6,22 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { FacebookIcon, GoogleIcon, MicrosoftIcon, TowerBuddyLogo } from '@/components/icons/SocialIcons';
 import Link from 'next/link';
+import { signIn, useSession } from 'next-auth/react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function LoginPage() {
+  const { data: session, status } = useSession();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push(callbackUrl);
+    }
+  }, [status, router, callbackUrl]);
+
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-gray-100 p-4">
       <div className="w-full max-w-4xl overflow-hidden rounded-lg bg-white shadow-lg md:grid md:grid-cols-2">
@@ -59,13 +73,13 @@ export default function LoginPage() {
           </div>
 
           <div className="grid grid-cols-3 gap-3">
-            <Button variant="outline" className="h-12">
+            <Button variant="outline" className="h-12" onClick={() => signIn('google', { callbackUrl })}>
               <GoogleIcon className="h-6 w-6" />
             </Button>
-            <Button variant="outline" className="h-12">
+            <Button variant="outline" className="h-12" onClick={() => signIn('facebook', { callbackUrl })}>
               <FacebookIcon className="h-6 w-6" />
             </Button>
-            <Button variant="outline" className="h-12">
+            <Button variant="outline" className="h-12" onClick={() => signIn('azure-ad-b2c', { callbackUrl })}>
               <MicrosoftIcon className="h-6 w-6" />
             </Button>
           </div>
