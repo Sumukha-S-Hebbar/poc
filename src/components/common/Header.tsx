@@ -104,6 +104,10 @@ export function Header() {
               <SelectItem value="es">{t('spanish')}</SelectItem>
             </SelectContent>
           </Select>
+           <Button variant="ghost" className="text-primary-foreground hover:bg-red-700 hover:text-primary-foreground">
+            <LogOut className="h-5 w-5" />
+            <span className="sr-only">{t('logout')}</span>
+          </Button>
         </div>
       </div>
     </header>
