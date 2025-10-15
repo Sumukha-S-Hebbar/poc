@@ -39,14 +39,15 @@ type FormData = z.infer<typeof formSchema>;
 
 const containerStyle = {
   width: '100%',
-  height: '400px',
+  height: '100%',
+  minHeight: '400px'
 };
 
 const libraries: ('places' | 'drawing' | 'geometry' | 'visualization')[] = ['places'];
 
 export default function CreateNominalPage() {
   const { toast } = useToast();
-  const [isLocating, setIsLocating] = useState(false);
+  const [isLocating, setIsLocating] = useState(true);
   const [currentPosition, setCurrentPosition] = useState<{ lat: number; lng: number } | null>(null);
 
   const form = useForm<FormData>({
@@ -84,6 +85,8 @@ export default function CreateNominalPage() {
             title: 'Location Error',
             description: 'Could not retrieve your location. Please enter it manually.',
           });
+          // Default to a fallback location if geolocation fails
+          setCurrentPosition({ lat: -1.2921, lng: 36.8219 });
           setIsLocating(false);
         }
       );
@@ -93,6 +96,8 @@ export default function CreateNominalPage() {
         title: 'Unsupported',
         description: 'Geolocation is not supported by your browser.',
       });
+       // Default to a fallback location if geolocation is not supported
+      setCurrentPosition({ lat: -1.2921, lng: 36.8219 });
       setIsLocating(false);
     }
   }, [form, toast]);
@@ -131,6 +136,7 @@ export default function CreateNominalPage() {
       description: `Successfully created nominal ${data.nominalName}.`,
     });
     form.reset();
+    handleUseMyLocation(); // Reset map to user's location
   };
 
   return (
@@ -141,144 +147,152 @@ export default function CreateNominalPage() {
     >
       <div className="container py-8">
         <h1 className="text-2xl font-bold tracking-tight mb-4">CREATE NOMINAL</h1>
-        <Card className="mb-8">
-          <CardContent className="p-4">
-            <div className="aspect-video w-full overflow-hidden rounded-lg border relative">
-              {currentPosition ? (
-                <GoogleMap
-                  mapContainerStyle={containerStyle}
-                  center={currentPosition}
-                  zoom={15}
-                  onClick={onMapClick}
-                >
-                  <Marker position={currentPosition} draggable onDragEnd={onMarkerDragEnd} />
-                </GoogleMap>
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-muted">
-                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-                </div>
-              )}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+                <Card className="h-full">
+                    <CardContent className="p-2 h-full">
+                        <div className="w-full h-full overflow-hidden rounded-md border relative">
+                        {currentPosition ? (
+                            <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={currentPosition}
+                            zoom={15}
+                            onClick={onMapClick}
+                            options={{ streetViewControl: false, mapTypeControl: false }}
+                            >
+                            <Marker position={currentPosition} draggable onDragEnd={onMarkerDragEnd} />
+                            </GoogleMap>
+                        ) : (
+                            <div className="flex h-full w-full items-center justify-center bg-muted">
+                                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                            </div>
+                        )}
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
-            <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
-              <Button onClick={handleUseMyLocation} variant="outline" disabled={isLocating}>
-                {isLocating ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <MapPin className="mr-2 h-4 w-4" />
-                )}
-                Use My Location
-              </Button>
-              <span>Or</span>
-              <span>Click on the map to place a marker.</span>
-            </div>
-          </CardContent>
-        </Card>
+            <div>
+                <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                     <div className="space-y-2">
+                        <Button onClick={handleUseMyLocation} type="button" variant="outline" disabled={isLocating} className="w-full">
+                            {isLocating ? (
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            ) : (
+                            <MapPin className="mr-2 h-4 w-4" />
+                            )}
+                            Use My Current Location
+                        </Button>
+                        <p className="text-center text-sm text-muted-foreground">Or click on the map to place a marker</p>
+                    </div>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <FormField
-                control={form.control}
-                name="nominalId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nominal ID *</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="nominalName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nominal Name</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="region"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Region/Province *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose An Option" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="nairobi">Nairobi</SelectItem>
-                        <SelectItem value="central">Central</SelectItem>
-                        <SelectItem value="coast">Coast</SelectItem>
-                        <SelectItem value="eastern">Eastern</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>City/Town *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose An Option" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="nairobi-city">Nairobi City</SelectItem>
-                        <SelectItem value="thika">Thika</SelectItem>
-                        <SelectItem value="mombasa">Mombasa</SelectItem>
-                        <SelectItem value="meru">Meru</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="latitude"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Latitude</FormLabel>
-                    <FormControl>
-                      <Input type="number" readOnly {...field} placeholder="Prefilled by map..." />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="longitude"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Longitude</FormLabel>
-                    <FormControl>
-                      <Input type="number" readOnly {...field} placeholder="Prefilled by map..." />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <FormField
+                            control={form.control}
+                            name="latitude"
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Latitude</FormLabel>
+                                <FormControl>
+                                <Input type="number" readOnly {...field} placeholder="Prefilled by map..." />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="longitude"
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Longitude</FormLabel>
+                                <FormControl>
+                                <Input type="number" readOnly {...field} placeholder="Prefilled by map..." />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                    </div>
+                    <FormField
+                        control={form.control}
+                        name="nominalId"
+                        render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Nominal ID *</FormLabel>
+                            <FormControl>
+                            <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="nominalName"
+                        render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Nominal Name</FormLabel>
+                            <FormControl>
+                            <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <FormField
+                            control={form.control}
+                            name="region"
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Region/Province *</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                    <SelectValue placeholder="Choose An Option" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    <SelectItem value="nairobi">Nairobi</SelectItem>
+                                    <SelectItem value="central">Central</SelectItem>
+                                    <SelectItem value="coast">Coast</SelectItem>
+                                    <SelectItem value="eastern">Eastern</SelectItem>
+                                </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="city"
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>City/Town *</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                    <SelectValue placeholder="Choose An Option" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    <SelectItem value="nairobi-city">Nairobi City</SelectItem>
+                                    <SelectItem value="thika">Thika</SelectItem>
+                                    <SelectItem value="mombasa">Mombasa</SelectItem>
+                                    <SelectItem value="meru">Meru</SelectItem>
+                                </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                    </div>
+                    <Button type="submit" className="w-full">Create Nominal</Button>
+                </form>
+                </Form>
             </div>
-            <Button type="submit">Create Nominal</Button>
-          </form>
-        </Form>
+        </div>
       </div>
     </LoadScript>
   );
