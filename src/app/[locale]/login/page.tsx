@@ -6,9 +6,19 @@ import { Label } from '@/components/ui/label';
 import { FacebookIcon, GoogleIcon, MicrosoftIcon, TowerBuddyLogo } from '@/components/icons/SocialIcons';
 import Link from 'next/link';
 import { useGoogleLogin } from '@react-oauth/google';
+import { useMsal } from '@azure/msal-react';
+import { InteractionType } from '@azure/msal-browser';
+
+// Declare Facebook SDK interface to avoid TypeScript errors
+declare global {
+  interface Window {
+    FB: any;
+  }
+}
 
 export default function LoginPage() {
-  
+  const { instance } = useMsal();
+
   const googleLogin = useGoogleLogin({
     onSuccess: tokenResponse => handleBackendLogin(tokenResponse.code, 'google'),
     flow: 'auth-code',
@@ -19,19 +29,33 @@ export default function LoginPage() {
   };
 
   const handleFacebookLogin = () => {
-    // This would typically involve using the Facebook SDK (e.g., FB.login)
-    // For demonstration, we'll simulate receiving an access token.
-    const fakeAccessToken = 'fake-facebook-access-token-67890';
-    console.log('Received Facebook Access Token:', fakeAccessToken);
-    handleBackendLogin(fakeAccessToken, 'facebook');
+    if (!window.FB) {
+      alert("Facebook SDK not loaded. Please ensure you've added the SDK script to your main HTML file.");
+      return;
+    }
+
+    window.FB.login(function(response: any) {
+      if (response.authResponse) {
+        console.log('Welcome!  Fetching your information.... ');
+        const accessToken = response.authResponse.accessToken;
+        handleBackendLogin(accessToken, 'facebook');
+      } else {
+        console.log('User cancelled login or did not fully authorize.');
+      }
+    }, {scope: 'public_profile,email'});
   };
   
-  const handleMicrosoftLogin = () => {
-    // This would typically involve a library like '@azure/msal-react'
-    // For demonstration, we'll simulate receiving an access token.
-    const fakeAccessToken = 'fake-microsoft-access-token-abcde';
-    console.log('Received Microsoft Access Token:', fakeAccessToken);
-    handleBackendLogin(fakeAccessToken, 'microsoft');
+  const handleMicrosoftLogin = async () => {
+    try {
+      const loginResponse = await instance.loginPopup({
+        scopes: ["User.Read"],
+      });
+      const accessToken = loginResponse.accessToken;
+      console.log('Received Microsoft Access Token:', accessToken);
+      handleBackendLogin(accessToken, 'microsoft');
+    } catch (err) {
+      console.error('Microsoft login failed:', err);
+    }
   };
 
   const handleBackendLogin = async (credential: string, provider: 'google' | 'facebook' | 'microsoft') => {
@@ -56,7 +80,7 @@ export default function LoginPage() {
     // } catch (error) {
     //   console.error('API call failed:', error);
     // }
-    alert(`Simulating backend call for ${provider} with credential: ${credential}`);
+    alert(`Simulating backend call for ${provider} with credential: ${credential.substring(0, 30)}...`);
   };
 
   return (
